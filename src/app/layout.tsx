@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fira_Code } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/custom-components/nav/Nav";
-import { cn } from "@/utlis/utils";
+import { cn } from "@/lib/utils";
 import LayoutProvider from "@/providers/LayoutProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Fira_Code({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Yash sahu",

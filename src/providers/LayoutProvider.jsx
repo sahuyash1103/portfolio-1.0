@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/utlis/utils";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 function LayoutProvider({ children, scaleW, scaleH, className }) {

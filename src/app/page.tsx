@@ -72,9 +72,7 @@ export default function Home() {
               An enthusiastic guy who is always curious about new technologies,
               always learning new technology and projects. A guy who is
               calculative about decisions and logics and always thinks that
-              everything happens for a reason. My reason of being in this world
-              is to provide people with software tool to ease their life style
-              through this company.
+              everything happens for a reason.
             </span>
           </div>
           <div className="mt-6 flex w-full justify-between gap-6">

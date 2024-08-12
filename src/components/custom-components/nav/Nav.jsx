@@ -4,8 +4,9 @@ import { ExternalLinkIcon } from "@/assets/svgs/index";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { cn } from "@/utlis/utils";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { TypewriterEffect } from "@/components/acerteinity/TypeWriterEffect";
 
 const links = [
   {
@@ -24,12 +25,13 @@ const links = [
 
 function Nav() {
   const pathname = usePathname();
+  const words = [{ text: "Yash", color: "text-primary" }];
 
   return (
     <nav className="flex h-14 w-full items-end justify-between px-2 pt-2">
       <div className="flex items-end text-2xl">
-        Yash
-        <span className="mb-1 ml-1 h-1 w-4 bg-tertiary"></span>
+        <TypewriterEffect words={words} cursorClassName="bg-tertiary" />
+        {/* <span className="mb-1 ml-1 h-1 w-4 bg-tertiary"></span> */}
       </div>
       <div className="flex">
         <ul className="flex gap-10">
