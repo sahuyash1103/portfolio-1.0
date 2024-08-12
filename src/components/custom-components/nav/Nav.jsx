@@ -26,7 +26,7 @@ function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex h-14 w-full items-center justify-between justify-self-center px-2 py-2">
+    <nav className="flex h-14 w-full items-end justify-between px-2 pt-2">
       <div className="flex items-end text-2xl">
         Yash
         <span className="mb-1 ml-1 h-1 w-4 bg-tertiary"></span>
@@ -37,7 +37,7 @@ function Nav() {
             <li
               key={i}
               className={cn(
-                "flex cursor-pointer gap-2 px-3 py-1 text-lg capitalize hover:text-tertiary",
+                "flex cursor-pointer gap-2 px-3 pt-1 text-lg capitalize hover:text-tertiary",
                 pathname === l.href && "text-tertiary",
                 l.type === "filled" &&
                   "rounded-full border border-primary bg-tertiary font-semibold text-primary hover:border-tertiary hover:bg-primary hover:text-tertiary",
