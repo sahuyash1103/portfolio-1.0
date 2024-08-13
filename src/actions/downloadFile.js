@@ -1,8 +1,8 @@
 "use server";
 import fs from "fs";
 
-export const readResume = async () => {
-  const file = fs.readFileSync("./src/assets/pdfs/Yash_Sahu_Resume.pdf");
+export const readResume = async (path) => {
+  const file = fs.readFileSync(path);
 
   return file;
 };

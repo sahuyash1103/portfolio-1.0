@@ -1,4 +1,3 @@
-"use client";
 import {
   DownloadIcon,
   GithubIcon,
@@ -8,7 +7,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { readResume } from "@/actions/downloadFile";
 
 const numbersData = [
   {
@@ -43,19 +41,6 @@ const Numbers = ({ number, text }: { number: string; text: string }) => {
 };
 
 export default function Home() {
-  const downloadResume = async () => {
-    const file = await readResume();
-
-    const blob = new Blob([file], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Yash_Sahu_Resume.pdf";
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <main className="flex h-full w-full flex-col items-center justify-start">
       <div className="flex h-[70%] w-full">
@@ -76,13 +61,14 @@ export default function Home() {
             </span>
           </div>
           <div className="mt-6 flex w-full justify-between gap-6">
-            <button
+            <Link
+              href={"/pdfs/resume.pdf"}
+              target="_blank"
               className="flex items-center gap-3 rounded-full border border-tertiary px-6 py-2"
-              onClick={downloadResume}
             >
               Download Resume
               <DownloadIcon className="w-6 text-2xl text-tertiary" />
-            </button>
+            </Link>
             <div className="flex items-center justify-center gap-4">
               <Link
                 href={"https://github.com/sahuyash1103"}
