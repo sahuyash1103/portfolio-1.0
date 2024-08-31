@@ -62,7 +62,8 @@ export default function Home() {
           </div>
           <div className="mt-6 flex w-full justify-between gap-6">
             <Link
-              href={"/pdfs/resume.pdf"}
+              // href={"/pdfs/resume.pdf"}
+              href={"https://1drv.ms/b/s!AiS--59qe9LzkIQ_2_JxZtpCw_X8UQ?e=wWfMcf"}
               target="_blank"
               className="flex items-center gap-3 rounded-full border border-tertiary px-6 py-2"
             >
@@ -92,7 +93,9 @@ export default function Home() {
           <div className="relative m-2 flex aspect-square w-[90%] items-center justify-center rounded-full border-4 border-primary p-4 outline outline-2 outline-tertiary">
             {/* Image */}
             <Image
-              src={"https://avatars.githubusercontent.com/u/72812188"}
+              src={
+                "https://media.licdn.com/dms/image/v2/D4D03AQE9affSC_fg1w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724819486635?e=1730332800&v=beta&t=CUG4_N7rOUw8VefAOPGXSGxJKwU8u7LaFa4vPetgXrs"
+              }
               alt=""
               layout="fill"
               objectFit="contain"

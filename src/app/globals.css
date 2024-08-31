@@ -16,6 +16,8 @@
   :root {
     --primary: 28 27 34;
 
+    --primary-2: 42, 40, 54;
+
     --primary-fg: 255 255 255;
 
     --secondary: 160 160 160;
@@ -23,6 +25,12 @@
     /* --tertiary: 30 250 170; */
     --tertiary: 230 190 10;
   }
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -33,5 +41,25 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: rgb(var(--primary-2));
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: rgb(var(--secondary));
+    border-radius: 100vh;
+    cursor: pointer;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--tertiary));
   }
 }
