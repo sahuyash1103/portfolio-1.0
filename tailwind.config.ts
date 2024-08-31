@@ -13,6 +13,7 @@ const config: Config = {
       colors: {
         primary: "rgb(var(--primary))",
         "primary-fg": "rgb(var(--primary-fg))",
+        "primary-2": "rgb(var(--primary-2))",
         secondary: "rgb(var(--secondary))",
         tertiary: "rgb(var(--tertiary))",
       },

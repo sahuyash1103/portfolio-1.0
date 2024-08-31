@@ -9,7 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["github.com", "avatars.githubusercontent.com"],
+    domains: ["github.com", "avatars.githubusercontent.com", "media.licdn.com"],
     // loader: "default",
     // path: "/_next/image",
     // remotePatterns: [

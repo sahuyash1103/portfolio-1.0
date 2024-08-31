@@ -2,7 +2,7 @@
 
 import { ExternalLinkIcon } from "@/assets/svgs/index";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -25,11 +25,15 @@ const links = [
 
 function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
   const words = [{ text: "Yash", color: "text-primary" }];
 
   return (
     <nav className="flex h-14 w-full items-end justify-between px-2 pt-2">
-      <div className="flex items-end text-2xl">
+      <div
+        className="flex cursor-pointer select-none items-end text-2xl"
+        onClick={() => router.push("/")}
+      >
         <TypewriterEffect words={words} cursorClassName="bg-tertiary" />
         {/* <span className="mb-1 ml-1 h-1 w-4 bg-tertiary"></span> */}
       </div>
