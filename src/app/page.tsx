@@ -94,7 +94,7 @@ export default function Home() {
             {/* Image */}
             <Image
               src={
-                "https://media.licdn.com/dms/image/v2/D4D03AQE9affSC_fg1w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724819486635?e=1730332800&v=beta&t=CUG4_N7rOUw8VefAOPGXSGxJKwU8u7LaFa4vPetgXrs"
+                "https://avatars.githubusercontent.com/u/72812188?s=400&u=c5597871c206a68c891242aed72f87e2b7f4345a&v=4"
               }
               alt=""
               layout="fill"
