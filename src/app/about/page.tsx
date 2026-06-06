@@ -118,7 +118,7 @@ export default function About() {
               </h1>
               <div className="flex flex-col gap-4 text-white/50 text-base leading-relaxed">
                 <p>
-                  I'm Yash Sahu, a Full Stack Developer based in India with a passion
+                  I&apos;m Yash Sahu, a Full Stack Developer based in India with a passion
                   for building things that scale. My journey started in 2018 when I first
                   discovered the power of code to solve real-world problems.
                 </p>
@@ -141,7 +141,7 @@ export default function About() {
                   Download Resume
                 </a>
                 <Link href="/contact" className="btn-outline">
-                  Let's Talk
+                  Let&apos;s Talk
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>

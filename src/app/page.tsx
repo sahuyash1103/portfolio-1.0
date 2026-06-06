@@ -376,7 +376,7 @@ export default function Home() {
               What I work with
             </h2>
             <p className="text-white/40 max-w-lg text-base">
-              A curated set of technologies I've mastered across the full stack.
+              A curated set of technologies I&apos;ve mastered across the full stack.
             </p>
           </motion.div>
 
@@ -456,7 +456,7 @@ export default function Home() {
                 </h2>
                 <p className="text-white/45 text-base leading-relaxed">
                   From real-time chat systems to e-commerce platforms and
-                  computer vision apps — take a deep dive into what I've shipped.
+                  computer vision apps — take a deep dive into what I&apos;ve shipped.
                 </p>
               </div>
 

@@ -97,12 +97,12 @@ export default function Contact() {
             04 — Contact
           </span>
           <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-            Let's build something<br />
+            Let&apos;s build something<br />
             <span className="text-gradient-primary">incredible together.</span>
           </h1>
           <p className="text-white/40 max-w-lg text-base leading-relaxed">
             Have a project in mind, want to collaborate, or just want to say hello?
-            I'd love to hear from you — my inbox is always open.
+            I&apos;d love to hear from you — my inbox is always open.
           </p>
         </motion.div>
 
@@ -335,7 +335,7 @@ export default function Contact() {
                       exit={{ opacity: 0 }}
                       className="text-sm text-emerald-400 font-medium"
                     >
-                      Thanks! I'll get back to you soon.
+                      Thanks! I&apos;ll get back to you soon.
                     </motion.span>
                   )}
                 </AnimatePresence>
