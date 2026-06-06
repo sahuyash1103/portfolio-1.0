@@ -1,19 +1,37 @@
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import { Space_Grotesk, Space_Mono, Syne } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/custom-components/nav/Nav";
 import { cn } from "@/lib/utils";
-import LayoutProvider from "@/providers/LayoutProvider";
 
-const inter = Inter({ subsets: ["latin"] });
-const firaCode = Fira_Code({
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "700"],
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Yash Sahu | Full Stack Developer",
-  description: "Modern portfolio of Yash Sahu, Full Stack Developer showing off personal projects, commits, and resume.",
+  title: "Yash Sahu — Full Stack Developer",
+  description:
+    "Portfolio of Yash Sahu, a Full Stack Developer crafting scalable web apps, real-time architectures, and computer vision systems.",
+  keywords: ["Full Stack Developer", "React", "Next.js", "NestJS", "Portfolio", "Yash Sahu"],
+  openGraph: {
+    title: "Yash Sahu — Full Stack Developer",
+    description: "Portfolio of Yash Sahu — scalable web apps, real-time systems, computer vision.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -22,24 +40,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" style={{ scrollBehavior: "smooth" }}>
       <body
         className={cn(
-          inter.className,
-          firaCode.variable,
-          "min-h-screen w-full flex flex-col items-center justify-start overflow-y-auto overflow-x-hidden antialiased bg-grid-pattern relative",
+          spaceGrotesk.variable,
+          spaceMono.variable,
+          syne.variable,
+          spaceGrotesk.className,
+          "min-h-screen w-full flex flex-col items-center justify-start overflow-y-auto overflow-x-hidden antialiased relative",
         )}
       >
-        {/* Ambient background glows */}
-        <div className="absolute top-[-10%] left-[10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow z-0" />
-        <div className="absolute top-[40vh] right-[10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none animate-float z-0" />
+        {/* Deep ambient background */}
+        <div className="fixed inset-0 bg-[rgb(4,4,12)] -z-10" />
+        <div className="fixed inset-0 bg-grid -z-10 opacity-60" />
 
-        <LayoutProvider scaleH={1000} scaleW={1000} className="flex flex-col w-full min-h-screen relative z-10">
+        {/* Floating ambient orbs */}
+        <div
+          className="fixed top-[-15%] left-[-5%] w-[600px] h-[600px] rounded-full pointer-events-none -z-10 animate-pulse-glow"
+          style={{ background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)" }}
+        />
+        <div
+          className="fixed top-[40vh] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none -z-10 animate-float"
+          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.07) 0%, transparent 70%)" }}
+        />
+        <div
+          className="fixed bottom-[-10%] left-[30%] w-[400px] h-[400px] rounded-full pointer-events-none -z-10 animate-float-delayed"
+          style={{ background: "radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%)" }}
+        />
+
+        <div className="flex flex-col w-full min-h-screen relative z-10">
           <Nav />
           <main className="flex-1 w-full flex flex-col">
             {children}
           </main>
-        </LayoutProvider>
+        </div>
       </body>
     </html>
   );

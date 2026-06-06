@@ -2,277 +2,348 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GithubIcon, LinkedInIcon, ExternalLinkIcon } from "@/assets/svgs/index";
+
+const emailAddress = "sahuyash1103+portfolio@gmail.com";
+
+const socialLinks = [
+  {
+    name: "GitHub",
+    handle: "@sahuyash1103",
+    href: "https://github.com/sahuyash1103",
+    color: "#e0e0e0",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    handle: "yash-sahu-58b645202",
+    href: "https://www.linkedin.com/in/yash-sahu-58b645202/",
+    color: "#0A66C2",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Email",
+    handle: "sahuyash1103@gmail.com",
+    href: `mailto:${emailAddress}`,
+    color: "#fbbf24",
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+];
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    email: "",
     subject: "",
     message: "",
   });
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [copied, setCopied] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const emailAddress = "sahuyash1103+portfolio@gmail.com";
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCopyEmail = () => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(emailAddress);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.subject || !formData.message) {
-      setFormStatus("error");
-      setTimeout(() => setFormStatus("idle"), 3000);
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
       return;
     }
-
-    setFormStatus("submitting");
-    // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setFormStatus("success");
-    setFormData({
-      firstName: "",
-      lastName: "",
-      subject: "",
-      message: "",
-    });
-    setTimeout(() => setFormStatus("idle"), 4000);
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
+    setStatus("submitting");
+    await new Promise((r) => setTimeout(r, 1200));
+    setStatus("success");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setTimeout(() => setStatus("idle"), 5000);
   };
 
   return (
-    <motion.main
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 flex flex-col min-h-screen"
-    >
-      {/* Page Header */}
-      <div className="flex flex-col mb-10 md:mb-12">
-        <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-cyan mb-2">
-          Get in Touch
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-          Let&apos;s Build Something
-        </h1>
-        <p className="text-secondary max-w-xl text-sm sm:text-base leading-relaxed">
-          Have an idea, want to collaborate, or just want to say hi? 
-          Drop me a line or reach out on my socials!
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start w-full">
-        {/* Left Column - Contact Info */}
-        <motion.div variants={itemVariants} className="lg:col-span-5 flex flex-col gap-6 w-full">
-          {/* Email Card */}
-          <div className="glass-panel rounded-2xl p-6 md:p-8 flex flex-col gap-4 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-tertiary/30 to-transparent" />
-            <span className="text-xs font-semibold text-accent-cyan uppercase tracking-wider">
-              Direct Contact
-            </span>
-            <h3 className="text-lg font-bold text-white">Email Address</h3>
-            <p className="text-sm text-secondary break-all font-mono">
-              {emailAddress}
-            </p>
-            <div className="flex flex-wrap items-center gap-3 mt-2">
-              <button
-                onClick={handleCopyEmail}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-white/10 hover:border-tertiary bg-white/5 text-xs font-semibold text-white transition-all duration-300"
-              >
-                {copied ? (
-                  <span className="text-accent-green">✓ Copied!</span>
-                ) : (
-                  <span>Copy Address</span>
-                )}
-              </button>
-              <a
-                href={`mailto:${emailAddress}`}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-tertiary to-accent-cyan hover:opacity-90 text-xs font-semibold text-black transition-all duration-300"
-              >
-                Send Mail
-                <ExternalLinkIcon className="w-3" />
-              </a>
-            </div>
-          </div>
-
-          {/* Socials Card */}
-          <div className="glass-panel rounded-2xl p-6 md:p-8 flex flex-col gap-4 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent-cyan/30 to-transparent" />
-            <span className="text-xs font-semibold text-tertiary uppercase tracking-wider">
-              On the Web
-            </span>
-            <h3 className="text-lg font-bold text-white">Social Profiles</h3>
-            <div className="flex flex-col gap-3 mt-1">
-              <a
-                href="https://github.com/sahuyash1103"
-                target="_blank"
-                className="flex items-center justify-between p-3 rounded-xl border border-white/5 hover:border-tertiary/30 hover:bg-tertiary/5 text-sm text-secondary hover:text-white transition-all duration-300"
-              >
-                <span className="flex items-center gap-3">
-                  <GithubIcon className="w-5 h-5 text-tertiary" />
-                  GitHub Profile
-                </span>
-                <span className="text-xs text-secondary/60">github.com/sahuyash1103</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/yash-sahu-58b645202/"
-                target="_blank"
-                className="flex items-center justify-between p-3 rounded-xl border border-white/5 hover:border-accent-cyan/30 hover:bg-accent-cyan/5 text-sm text-secondary hover:text-white transition-all duration-300"
-              >
-                <span className="flex items-center gap-3">
-                  <LinkedInIcon className="w-5 h-5 text-accent-cyan" />
-                  LinkedIn Profile
-                </span>
-                <span className="text-xs text-secondary/60">linkedin.com/in/yash-sahu...</span>
-              </a>
-            </div>
-          </div>
+    <div className="w-full">
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+      >
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col gap-4 mb-14"
+        >
+          <span className="section-eyebrow">
+            <span className="text-amber-400">{"// "}</span>
+            04 — Contact
+          </span>
+          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+            Let's build something<br />
+            <span className="text-gradient-primary">incredible together.</span>
+          </h1>
+          <p className="text-white/40 max-w-lg text-base leading-relaxed">
+            Have a project in mind, want to collaborate, or just want to say hello?
+            I'd love to hear from you — my inbox is always open.
+          </p>
         </motion.div>
 
-        {/* Right Column - Contact Form */}
-        <motion.div variants={itemVariants} className="lg:col-span-7 w-full">
-          <form
-            className="glass-panel rounded-2xl p-6 md:p-8 flex flex-col gap-6 relative"
-            onSubmit={onSubmit}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+          {/* Left: Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-2 flex flex-col gap-5"
           >
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-tertiary/50 via-violet-500/50 to-accent-cyan/50" />
-
-            <h3 className="text-lg font-bold text-white mb-2">Send a Message</h3>
-
-            {/* Row: First and Last Name */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                  First Name <span className="text-tertiary">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. John"
-                  className="rounded-xl border border-white/10 bg-slate-900/40 px-4 py-3 text-white text-sm outline-none focus:border-tertiary transition-all duration-300"
-                  required
-                />
+            {/* Big Email CTA */}
+            <div className="glass-bright rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden group">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-amber-400 to-sky-400" />
+              <div className="flex flex-col gap-1">
+                <span className="section-eyebrow text-xs opacity-70">Direct Line</span>
+                <h3 className="font-display font-bold text-white text-lg">Email Me</h3>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Doe"
-                  className="rounded-xl border border-white/10 bg-slate-900/40 px-4 py-3 text-white text-sm outline-none focus:border-tertiary transition-all duration-300"
-                />
+              <p className="font-mono-custom text-xs text-white/40 break-all leading-relaxed">
+                {emailAddress}
+              </p>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={handleCopy}
+                  className="btn-outline text-xs px-4 py-2"
+                >
+                  {copied ? (
+                    <><span className="text-emerald-400">✓</span> Copied!</>
+                  ) : (
+                    <><svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>Copy</>
+                  )}
+                </button>
+                <a
+                  href={`mailto:${emailAddress}`}
+                  className="btn-primary text-xs px-4 py-2"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  Open Mail App
+                </a>
               </div>
             </div>
 
-            {/* Subject */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                Subject <span className="text-tertiary">*</span>
-              </label>
-              <input
-                type="text"
-                name="subject"
-                value={formData.subject}
-                onChange={handleInputChange}
-                placeholder="What is this regarding?"
-                className="rounded-xl border border-white/10 bg-slate-900/40 px-4 py-3 text-white text-sm outline-none focus:border-tertiary transition-all duration-300"
-                required
-              />
-            </div>
-
-            {/* Message Description */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                Message <span className="text-tertiary">*</span>
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Type your message details here..."
-                className="h-36 resize-none rounded-xl border border-white/10 bg-slate-900/40 px-4 py-3 text-white text-sm outline-none focus:border-tertiary transition-all duration-300"
-                required
-              />
-            </div>
-
-            {/* Buttons and feedback */}
-            <div className="flex items-center gap-4 mt-2">
-              <button
-                type="submit"
-                disabled={formStatus === "submitting" || formStatus === "success"}
-                className="w-fit rounded-full bg-gradient-to-r from-tertiary to-accent-cyan hover:opacity-90 disabled:opacity-60 px-8 py-3 text-sm font-bold text-black tracking-wide shadow-lg hover:shadow-tertiary/15 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                {formStatus === "submitting" ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : formStatus === "success" ? (
-                  "Sent Successfully"
-                ) : (
-                  "Submit Message"
-                )}
-              </button>
-
-              <AnimatePresence>
-                {formStatus === "success" && (
-                  <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-sm font-semibold text-accent-green"
+            {/* Social Links */}
+            <div className="glass-bright rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400/40 to-transparent" />
+              <div className="flex flex-col gap-1 mb-2">
+                <span className="section-eyebrow text-xs opacity-70">Find me online</span>
+                <h3 className="font-display font-bold text-white text-lg">Social Profiles</h3>
+              </div>
+              <div className="flex flex-col gap-3">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/6 hover:border-white/15 bg-white/3 hover:bg-white/6 transition-all duration-300 group/link"
                   >
-                    ✓ Thanks! I&apos;ll get back to you soon.
-                  </motion.span>
-                )}
-                {formStatus === "error" && (
-                  <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-sm font-semibold text-accent-rose"
-                  >
-                    ⚠ Please fill out all required fields.
-                  </motion.span>
-                )}
-              </AnimatePresence>
+                    <span className="flex items-center gap-3">
+                      <span className="text-white/40 group-hover/link:text-white/70 transition-colors">
+                        {link.icon}
+                      </span>
+                      <span className="text-sm font-medium text-white/60 group-hover/link:text-white/80 transition-colors">
+                        {link.name}
+                      </span>
+                    </span>
+                    <span className="font-mono-custom text-xs text-white/20">
+                      {link.handle.slice(0, 18)}{link.handle.length > 18 ? "..." : ""}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </form>
-        </motion.div>
-      </div>
-    </motion.main>
+
+            {/* Availability */}
+            <div className="glass rounded-2xl px-5 py-4 flex items-center gap-3 border border-emerald-400/15">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium text-white/70">Currently Available</span>
+                <span className="font-mono-custom text-xs text-white/30">Response within 24 hours</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-3"
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="glass-bright rounded-2xl p-6 md:p-8 flex flex-col gap-5 relative overflow-hidden"
+            >
+              {/* Top gradient */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-indigo-400 to-sky-400" />
+
+              <h3 className="font-display font-bold text-white text-xl">Send a Message</h3>
+
+              {/* Name + Email row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { name: "name", label: "Your Name", placeholder: "John Doe", required: true, type: "text" },
+                  { name: "email", label: "Email Address", placeholder: "john@example.com", required: true, type: "email" },
+                ].map((field) => (
+                  <div key={field.name} className="flex flex-col gap-1.5">
+                    <label className="font-mono-custom text-xs text-white/30 uppercase tracking-widest">
+                      {field.label} {field.required && <span className="text-indigo-400">*</span>}
+                    </label>
+                    <input
+                      type={field.type}
+                      name={field.name}
+                      value={formData[field.name as keyof typeof formData]}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField(field.name)}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder={field.placeholder}
+                      className="rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition-all duration-300"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: focusedField === field.name
+                          ? "1px solid rgba(99,102,241,0.5)"
+                          : "1px solid rgba(255,255,255,0.08)",
+                        boxShadow: focusedField === field.name
+                          ? "0 0 0 3px rgba(99,102,241,0.08)"
+                          : "none",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Subject */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-mono-custom text-xs text-white/30 uppercase tracking-widest">
+                  Subject <span className="text-indigo-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField("subject")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="What's this about?"
+                  className="rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: focusedField === "subject"
+                      ? "1px solid rgba(99,102,241,0.5)"
+                      : "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: focusedField === "subject"
+                      ? "0 0 0 3px rgba(99,102,241,0.08)"
+                      : "none",
+                  }}
+                />
+              </div>
+
+              {/* Message */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-mono-custom text-xs text-white/30 uppercase tracking-widest">
+                  Message <span className="text-indigo-400">*</span>
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField("message")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="Tell me about your project, idea, or just say hi..."
+                  rows={5}
+                  className="rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 outline-none resize-none transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: focusedField === "message"
+                      ? "1px solid rgba(99,102,241,0.5)"
+                      : "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: focusedField === "message"
+                      ? "0 0 0 3px rgba(99,102,241,0.08)"
+                      : "none",
+                  }}
+                />
+              </div>
+
+              {/* Submit */}
+              <div className="flex items-center gap-4">
+                <button
+                  type="submit"
+                  disabled={status === "submitting" || status === "success"}
+                  className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === "submitting" ? (
+                    <>
+                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Sending...
+                    </>
+                  ) : status === "success" ? (
+                    <><span>✓</span> Message Sent!</>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+
+                <AnimatePresence>
+                  {status === "error" && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-sm text-rose-400 font-medium"
+                    >
+                      ⚠ Please fill in all required fields.
+                    </motion.span>
+                  )}
+                  {status === "success" && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-sm text-emerald-400 font-medium"
+                    >
+                      Thanks! I'll get back to you soon.
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      </motion.main>
+    </div>
   );
 }

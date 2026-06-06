@@ -5,21 +5,14 @@ const nextConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
   },
   images: {
-    domains: ["github.com", "avatars.githubusercontent.com", "media.licdn.com"],
-    // loader: "default",
-    // path: "/_next/image",
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "github.com",
-    //     pathname: "/",
-    //     port: "",
-    //   },
-    // ],
+    remotePatterns: [
+      { protocol: "https", hostname: "github.com" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "media.licdn.com" },
+    ],
   },
 };
 
