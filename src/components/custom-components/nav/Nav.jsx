@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { TypewriterEffect } from "@/components/acerteinity/TypeWriterEffect";
+import { motion } from "framer-motion";
 
 const links = [
   {
@@ -26,49 +26,61 @@ const links = [
 function Nav() {
   const pathname = usePathname();
   const router = useRouter();
-  const words = [{ text: "Yash", color: "text-primary" }];
+  const words = [{ text: "Yash", className: "text-tertiary font-bold tracking-wider" }];
 
   return (
-    <nav className="flex h-14 w-full items-end justify-between px-2 pt-2">
-      <div
-        className="flex cursor-pointer select-none items-end text-2xl"
-        onClick={() => router.push("/")}
-      >
-        <TypewriterEffect words={words} cursorClassName="bg-tertiary" />
-        {/* <span className="mb-1 ml-1 h-1 w-4 bg-tertiary"></span> */}
-      </div>
-      <div className="flex">
-        <ul className="flex gap-10">
-          {links.map((l, i) => (
-            <li
-              key={i}
-              className={cn(
-                "flex cursor-pointer gap-2 px-3 pt-1 text-lg capitalize hover:text-tertiary",
-                pathname === l.href && "text-tertiary",
-                l.type === "filled" &&
-                  "rounded-full border border-primary bg-tertiary font-semibold text-primary hover:border-tertiary hover:bg-primary hover:text-tertiary",
-              )}
-            >
-              <Link href={l.href} className="">
-                {l.label}
-              </Link>
-            </li>
-          ))}
-          <li
-            className={
-              "flex cursor-pointer gap-2 rounded-full border border-primary bg-tertiary px-3 py-1 text-lg font-semibold capitalize text-primary hover:border-tertiary hover:bg-primary hover:text-tertiary"
-            }
+    <header className="sticky top-0 z-50 w-full px-4 py-4 md:px-6 flex justify-center">
+      <nav className="w-full max-w-5xl glass-panel rounded-full px-4 py-2.5 md:px-6 flex items-center justify-between shadow-xl shadow-black/25">
+        <div
+          className="flex cursor-pointer select-none items-center gap-1 text-xl md:text-2xl font-bold font-mono"
+          onClick={() => router.push("/")}
+        >
+          <span className="text-tertiary">&lt;</span>
+          <TypewriterEffect words={words} cursorClassName="bg-accent-cyan" />
+          <span className="text-accent-cyan">/&gt;</span>
+        </div>
+
+        <div className="flex items-center gap-6">
+          <ul className="flex items-center gap-1 md:gap-4">
+            {links.map((l, i) => {
+              const isActive = pathname === l.href;
+              return (
+                <li key={i} className="relative">
+                  <Link
+                    href={l.href}
+                    className={cn(
+                      "flex cursor-pointer gap-2 px-3 py-1.5 text-sm md:text-base font-medium rounded-full transition-all duration-300",
+                      isActive
+                        ? "text-tertiary"
+                        : "text-secondary hover:text-white"
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavTab"
+                      className="absolute inset-0 bg-tertiary/10 rounded-full -z-10 border border-tertiary/20"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="hidden sm:block h-5 w-[1px] bg-white/10" />
+
+          <Link
+            href="mailto:sahuyash1103+portfolio@gmail.com"
+            className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-tertiary to-accent-cyan px-4 py-1.5 text-sm font-semibold text-black hover:opacity-90 hover:shadow-lg hover:shadow-tertiary/20 transition-all duration-300"
           >
-            <Link href={"mailto:sahuyash1103@gmail.com"} className="flex gap-2">
-              E-Mail
-              <sup className="mt-2">
-                <ExternalLinkIcon className="w-4" />
-              </sup>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+            Email
+            <ExternalLinkIcon className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </nav>
+    </header>
   );
 }
 

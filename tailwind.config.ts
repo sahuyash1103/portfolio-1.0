@@ -16,6 +16,9 @@ const config: Config = {
         "primary-2": "rgb(var(--primary-2))",
         secondary: "rgb(var(--secondary))",
         tertiary: "rgb(var(--tertiary))",
+        "accent-cyan": "rgb(var(--accent-cyan))",
+        "accent-green": "rgb(var(--accent-green))",
+        "accent-rose": "rgb(var(--accent-rose))",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

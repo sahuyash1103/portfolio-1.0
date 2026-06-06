@@ -1,12 +1,14 @@
+"use client";
+
 import {
   DownloadIcon,
   GithubIcon,
   LinkedInIcon,
-  InstagramIcon,
 } from "@/assets/svgs/index";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
 
 const numbersData = [
   {
@@ -27,95 +29,148 @@ const numbersData = [
   },
 ];
 
-const Numbers = ({ number, text }: { number: string; text: string }) => {
-  return (
-    <div className="gap-2m mx-3 flex h-fit w-fit gap-2">
-      <span className="flex items-center justify-center text-5xl">
-        {number}
-      </span>
-      <span className="flex h-full items-center text-wrap text-lg text-secondary">
-        {text}
-      </span>
-    </div>
-  );
-};
-
 export default function Home() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <main className="flex h-full w-full flex-col items-center justify-start">
-      <div className="flex h-[70%] w-full">
-        <section className="flex h-full w-full flex-col items-center justify-center">
-          <div className="flex flex-col">
-            <span className="my-2 text-lg text-primary-fg/70">
-              Full Stack Developer
-            </span>
-            <span className="text-bold mb-1 mt-2 text-5xl tracking-widest text-primary-fg">{`Hello, I'm`}</span>
-            <span className="text-bold mb-4 mt-1 text-6xl text-tertiary">
-              Yash Sahu
-            </span>
-            <span className="text-justify text-sm text-secondary">
-              An enthusiastic guy who is always curious about new technologies,
-              always learning new technology and projects. A guy who is
-              calculative about decisions and logics and always thinks that
-              everything happens for a reason.
-            </span>
-          </div>
-          <div className="mt-6 flex w-full justify-between gap-6">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 flex flex-col justify-between gap-12"
+    >
+      {/* Hero Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
+        {/* Left Intro Column */}
+        <motion.section 
+          variants={itemVariants}
+          className="lg:col-span-7 flex flex-col items-start text-left"
+        >
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-cyan mb-2">
+            Full Stack Developer
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-2">
+            Hello, I&apos;m
+          </h1>
+          <h2 className="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-tertiary via-violet-400 to-accent-cyan tracking-tight mb-6">
+            Yash Sahu
+          </h2>
+          <p className="text-base text-secondary leading-relaxed text-left max-w-xl mb-8">
+            I am a Full Stack Developer specializing in building scalable web applications, 
+            real-time architectures, and computer vision systems. Deeply curious and analytical, 
+            I enjoy designing robust backends in NestJS and Django, crafting modern interfaces 
+            in Next.js and Flutter, and implementing AI-driven automation. I believe that every 
+            complex engineering challenge has an elegant, calculative solution.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 w-full">
             <Link
-              // href={"/pdfs/resume.pdf"}
-              href={"https://1drv.ms/b/s!AiS--59qe9LzkIQ_2_JxZtpCw_X8UQ?e=wWfMcf"}
+              href="https://1drv.ms/b/c/f3d27b6a9ffbbe24/IQAhknf4skVzRJDy8OLU3xNuAYbJMr0P2XDlT4dkdRJFYWs"
               target="_blank"
-              className="flex items-center gap-3 rounded-full border border-tertiary px-6 py-2"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-tertiary to-accent-cyan p-[1.5px] hover:shadow-lg hover:shadow-tertiary/20 transition-all duration-300"
             >
-              Download Resume
-              <DownloadIcon className="w-6 text-2xl text-tertiary" />
+              <span className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-950 text-white font-semibold text-sm group-hover:bg-transparent group-hover:text-black transition-all duration-300">
+                Download Resume
+                <DownloadIcon className="w-4 h-4 text-tertiary group-hover:text-black transition-colors" />
+              </span>
             </Link>
-            <div className="flex items-center justify-center gap-4">
+
+            <div className="flex items-center gap-4">
               <Link
-                href={"https://github.com/sahuyash1103"}
+                href="https://github.com/sahuyash1103"
                 target="_blank"
-                className="flex items-center gap-3 rounded-full border border-tertiary p-2"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:border-tertiary hover:text-tertiary transition-all duration-300 bg-white/5"
               >
-                <GithubIcon className="w-4 text-2xl text-tertiary" />
+                <GithubIcon className="w-5 h-5" />
               </Link>
               <Link
-                href={"https://www.linkedin.com/in/yash-sahu-58b645202/"}
+                href="https://www.linkedin.com/in/yash-sahu-58b645202/"
                 target="_blank"
-                className="flex items-center gap-3 rounded-full border border-tertiary p-2"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:border-tertiary hover:text-tertiary transition-all duration-300 bg-white/5"
               >
-                <LinkedInIcon className="w-4 text-2xl text-tertiary" />
+                <LinkedInIcon className="w-5 h-5" />
               </Link>
             </div>
           </div>
-        </section>
-        <section className="flex h-full w-full flex-col items-center justify-center p-1">
-          {/* TODO: IMAGE */}
-          <div className="relative m-2 flex aspect-square w-[90%] items-center justify-center rounded-full border-4 border-primary p-4 outline outline-2 outline-tertiary">
-            {/* Image */}
-            <Image
-              src={
-                "https://avatars.githubusercontent.com/u/72812188?s=400&u=c5597871c206a68c891242aed72f87e2b7f4345a&v=4"
-              }
-              alt=""
-              layout="fill"
-              objectFit="contain"
-              className="rounded-full"
-            />
+        </motion.section>
+
+        {/* Right Avatar Column */}
+        <motion.section 
+          variants={itemVariants}
+          className="lg:col-span-5 flex flex-col items-center justify-center relative py-6"
+        >
+          {/* Decorative rotating outer ring */}
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80 flex items-center justify-center">
+            {/* Ambient Back Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-tertiary to-accent-cyan rounded-full filter blur-[50px] opacity-20 pointer-events-none animate-pulse-slow"></div>
+
+            {/* Rotating colored border */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-tertiary via-transparent to-accent-cyan opacity-40 animate-spin-slow"></div>
+
+            {/* Inner avatar container */}
+            <div className="absolute inset-[6px] rounded-full bg-slate-950 p-2 overflow-hidden flex items-center justify-center border border-white/5">
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                <Image
+                  src="/profile-pic.jpeg"
+                  alt="Yash Sahu"
+                  fill
+                  sizes="(max-width: 768px) 288px, 320px"
+                  priority
+                  style={{ objectFit: "cover" }}
+                  className="rounded-full select-none"
+                />
+              </div>
+            </div>
           </div>
-        </section>
+        </motion.section>
       </div>
-      <footer className="mb-1 flex h-[25%] w-full">
-        {
-          <div className="flex h-full w-full items-center justify-center gap-6">
-            {numbersData.map((data, index) => (
-              <React.Fragment key={index}>
-                {index != 0 && <span className="text-secondary">|</span>}
-                <Numbers number={data.number} text={data.text} />
-              </React.Fragment>
-            ))}
-          </div>
-        }
-      </footer>
-    </main>
+
+      {/* Stats Section */}
+      <motion.footer 
+        variants={itemVariants}
+        className="w-full mt-8 md:mt-16"
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {numbersData.map((data, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="glass-panel glass-panel-hover rounded-2xl p-5 md:p-6 flex flex-col items-center justify-center text-center shadow-lg transition-all duration-300 relative overflow-hidden group"
+            >
+              {/* Top border glowing highlight */}
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-tertiary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <span className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-tertiary to-accent-cyan font-mono tracking-tight mb-2">
+                {data.number}
+              </span>
+              <span className="text-xs md:text-sm text-secondary font-medium uppercase tracking-wider">
+                {data.text}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </motion.footer>
+    </motion.div>
   );
 }
